@@ -45,11 +45,13 @@ var tracerProvider = Sdk.CreateTracerProviderBuilder()
     // ===== OTLP gRPC Exporter（官方推荐）=====
     .AddOtlpExporter(opt =>
     {
-
+        // 这里如果是Jaeger并且使用grpc协议上报，endpoint需要填写成http://JaegerIP:4317
+        // 这里如果是Jaeger并且使用http协议上报，endpoint需要填写成http://JaegerIP:4318/v1/traces
+        // 如果是腾讯云APM,端口地址为4319和4320，使用grpc的方式上报，地址填写为http://ap-shanghai.apm.tencentcs.com:4319即可，不需要添加路径，并注意上方attributes中token的填写
         opt.Endpoint = new Uri("");
 
         opt.Protocol = OtlpExportProtocol.Grpc;
-
+        // opt.Protocol = OtlpExportProtocol.HttpProtobuf;
 
     })
 
